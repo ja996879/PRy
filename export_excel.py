@@ -18,7 +18,7 @@ class EXport_excel:
        worksheet.set_column('A:D', 20)
    
        xa=Sql3()
-       xa_all=xa.s_sql("select * from products")
+       xa_all=xa.s_sql("select a.pro_name,p.p_name,p.price from allpro as a inner join products as p on a.id=p.pn_name")
        
        z=0
        y=0

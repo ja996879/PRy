@@ -4,19 +4,22 @@ class Sql3:
   
    def __init__(self):
        self.conn = sqlite3.connect('PRy.sqlite')
-       
+       self.conn.text_factory = str
        
    def s_sql(self,s_str):
-        
-        s_cursor = self.conn.execute(s_str)
-        return s_cursor
+     try:
+       s_cursor = self.conn.execute(s_str)
+       return s_cursor
+     except:
+        print("select error")
+         
      
 
       
    def i_sql(self, i_str , *args):
-      if len(args)==2:
+      if len(args)==3:
        try: 
-        u_coursor = self.conn.execute(i_str ,(args[0],args[1]))
+        u_coursor = self.conn.execute(i_str ,(args[0],args[1],args[2]))
         self.conn.commit()
         return True
        except sqlite3.Error:
@@ -24,8 +27,10 @@ class Sql3:
        
        
    def u_sql(self,u_str , *args):
+      print(u_str)
       try: 
-        u_coursor = self.conn.execute(u_str ,(args[0],args[1]))
+        u_coursor = self.conn.execute(u_str ,(args[0],args[1],args[2],args[3]))
+        
         self.conn.commit()
       except sqlite3.Error:
         print("update error")
@@ -35,8 +40,10 @@ class Sql3:
       
         d_coursor = self.conn.execute(d_str , [args[0]])
         self.conn.commit()
+        return True
       except:
         print("delete error")
+        return False
        
    def del_con(self):
       self.conn.close()
