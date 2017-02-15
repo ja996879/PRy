@@ -8,12 +8,13 @@ from tkinter import *
 from con_sql import Sql3
 from export_excel import EXport_excel
 from tkinter import Tk, StringVar, ttk
+from y_select import Y_sea
 
 class appMain(Frame):
     
     def __init__(self,master=None):
         Frame.__init__(self,master)
-        master.minsize(width=500, height=520)
+        master.minsize(width=500, height=560)
         self.grid()
         
         self.createWindow()
@@ -112,7 +113,7 @@ class appMain(Frame):
 
         self.inpbuton2 = Button(frame2, text="確認", width=8,font=("Courier", 10))
         self.inpbuton2.grid(row=6,column=0 ,pady=5)
-        self.inpbuton2['command']=self.sayhello  #sayhello
+        self.inpbuton2['command']=self.download_excel  #sayhello
 
         self.box_value = StringVar()
         self.box = ttk.Combobox(frame2, textvariable=self.box_value, state='readonly')
@@ -132,11 +133,16 @@ class appMain(Frame):
 
         self.stainput = Entry(frame2,width=6)
         self.stainput.grid(row=2,column=1 , sticky=W ,pady=5)
+        
+        self.inpbuton3 = Button(frame2, text="確認2", width=8,font=("Courier", 10))
+        self.inpbuton3.grid(row=5,column=0 ,pady=5)
+        self.inpbuton3['command']=self.sayhello 
 
         #######################################Standard Error###################
 
     def sayhello(self):
-        mes_box=self.lockpninput.get()
+        #mes_box=self.stainput.get()
+        mes_box=s_Help.Conver_ya("Ruby on Rails")
         messagebox.showinfo("warning",mes_box)
     def allpro(self):
         
@@ -165,7 +171,7 @@ class appMain(Frame):
         cbx.del_con()
         self.box2['values']=box2_menu
         #combobox onchange event
-        
+        #lock     
     def change_box2(self):
         lock_name = self.lockpninput.get()
         lox = Sql3()
@@ -222,7 +228,16 @@ class appMain(Frame):
              messagebox.showinfo("alert","刪除成功")
         else:
              messagebox.showinfo("warning","刪除錯誤")
-        
+    def download_excel(self):
+        er_box = self.stainput.get()
+        er_word = self.box2.get()
+        er_px = Sql3()
+        er_pri = er_px.s_sql("select price from products where p_name='%s'" %(er_word))
+        for er in er_pri:
+             er_price = er[0]      
+        ax=Y_sea(er_box ,s_Help.Conver_ya(er_word ),int(er_price))
+        ax.ssprint()
+        er_px.del_con()
 if __name__ == '__main__':
    root = Tk() 
    root.wm_title("RPy")

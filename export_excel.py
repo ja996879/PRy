@@ -1,3 +1,4 @@
+# coding=UTF-8
 import os
 import xlsxwriter
 from datetime import datetime
@@ -29,16 +30,25 @@ class EXport_excel:
           z+=1
        workbook.close()
        xa.del_con
-          
+   def ExExcel(self,e_info):
+       print(e_info)
+       z=0
+       y=0
+       e_workbook = xlsxwriter.Workbook("C:\\Users\\%s\\Desktop\\%s.xlsx" % (self.us,self.today_dt))
+       ew_workbook = e_workbook.add_worksheet()
+       ew_workbook.set_column('A:D', 20)
+       for k,v in e_info.items():
+          ew_workbook.write(z,y,k)
+          ew_workbook.write(z,y+1,v[0])
+          ew_workbook.write(z,y+2,v[1])
+          z+=1
+       e_workbook.close
+         
+
 '''
-       bold = workbook.add_format({'bold': True})
-
-       worksheet.write('A1', 'Hello')
-
-       worksheet.write('A2', 'World', bold)
-       worksheet.write('B2', 'World', bold)
-
-       worksheet.write(2, 0, 123)
-       worksheet.write(3, 0, 123.4561)
+ 
+       a=EXport_excel()
+       b={"a":[1,2]}
+       a.ExExcel(b)
 '''     
 
