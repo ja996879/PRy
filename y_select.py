@@ -61,7 +61,7 @@ class Y_sea:
      yx.ExExcel(y_dict,hisa,y_price)
      
 
-#露天 http://search.ruten.com.tw/search/s000.php?enc=u&searchfrom=searchf&k=arduino+mega&t=0&p=2   p is page_will
+##露天 http://search.ruten.com.tw/search/s000.php?enc=u&searchfrom=searchf&k=arduino+mega&t=0&p=2   p is page_will
 #yahoo https://tw.search.bid.yahoo.com/search/auction/product?p=amd+a6-3650&qt=product&kw=amd+a6-3650&cid=0&clv=0&acu=0   
 #('kw','kw','省略幾筆','pg')
 '''
