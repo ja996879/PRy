@@ -115,29 +115,31 @@ class appMain(Frame):
         self.inpbuton2.grid(row=6,column=0 ,pady=5)
         self.inpbuton2['command']=self.download_excel  #sayhello
 
+        self.box1_label = Label(frame2, text=" Select top : ")
+        self.box1_label.grid(row=0,column=0,sticky=W ,pady=5)
+       
         self.box_value = StringVar()
         self.box = ttk.Combobox(frame2, textvariable=self.box_value, state='readonly')
         self.box['values']=self.allpro()
         self.box.current(0)
         #self.box.bind("<<ComboboxSelected>>", self.change_box2) ##self.justamethod
-        self.box.grid(row=0,column=0, columnspan=3 ,pady=20)
+        self.box.grid(row=1,column=0, columnspan=3 ,pady=20)
 
+        self.box2_label = Label(frame2, text=" product top : ")
+        self.box2_label.grid(row=2,column=0,sticky=W ,pady=5)
+        
         self.box2_value = StringVar()
         self.box2 = ttk.Combobox(frame2, textvariable=self.box2_value,state='readonly' ,postcommand=self.justamethod ,values=["請選擇"])
         
         self.box2.current(0)
-        self.box2.grid(row=1,column=0, columnspan=3 ,pady=5)
+        self.box2.grid(row=3,column=0, columnspan=3 ,pady=5)
 
         self.standard = Label(frame2, text=" Standard Error : ")
-        self.standard.grid(row=2,column=0,sticky=W ,pady=5)
+        self.standard.grid(row=4,column=0,sticky=W ,pady=5)
 
         self.stainput = Entry(frame2,width=6)
-        self.stainput.grid(row=2,column=1 , sticky=W ,pady=5)
-        
-        self.inpbuton3 = Button(frame2, text="確認2", width=8,font=("Courier", 10))
-        self.inpbuton3.grid(row=5,column=0 ,pady=5)
-        self.inpbuton3['command']=self.sayhello 
-
+        self.stainput.grid(row=4,column=1 , sticky=W ,pady=5)
+    
         #######################################Standard Error###################
 
     def sayhello(self):
@@ -159,19 +161,23 @@ class appMain(Frame):
     def justamethod (self):
         box2_menu=[]
         mes_box=self.box.get()
-        
-        cbx = Sql3()
-        coi = cbx.s_sql("select id from allpro where pro_name = '%s'" %(mes_box))
-        for coq in coi:
-            xcoi=coq[0]
-        cbo =cbx.s_sql("select p_name from products where pn_name = '%s'" %(xcoi))
-        box2_menu.append("請選擇")
-        for coa in cbo:
+        mes_box=s_Help.check_str(mes_box)
+        try:
+          cbx = Sql3()
+          coi = cbx.s_sql("select id from allpro where pro_name = '%s'" %(mes_box))
+          for coq in coi:
+             xcoi=coq[0]
+          cbo =cbx.s_sql("select p_name from products where pn_name = '%s'" %(xcoi))
+          box2_menu.append("請選擇")
+          for coa in cbo:
              box2_menu.append(coa[0])
-        cbx.del_con()
-        self.box2['values']=box2_menu
+          cbx.del_con()
+          self.box2['values']=box2_menu
+        except:
+          messagebox.showinfo("warning","請先選擇上方條件")
         #combobox onchange event
-        #lock     
+        #lock
+          
     def change_box2(self):
         lock_name = self.lockpninput.get()
         lox = Sql3()
@@ -228,6 +234,7 @@ class appMain(Frame):
              messagebox.showinfo("alert","刪除成功")
         else:
              messagebox.showinfo("warning","刪除錯誤")
+             
     def download_excel(self):
         er_box = self.stainput.get()
         er_word = self.box2.get()
@@ -238,6 +245,7 @@ class appMain(Frame):
         ax=Y_sea(er_box ,s_Help.Conver_ya(er_word ),int(er_price))
         ax.ssprint()
         er_px.del_con()
+        
 if __name__ == '__main__':
    root = Tk() 
    root.wm_title("RPy")

@@ -20,16 +20,22 @@ class Y_sea:
      y_limit = 0
      y_limit_add = 60
      y_dict = {}
+     y_price = self.yhm_price
+     hisa = int(self.yh_price)
+     print(y_price)
+     print("https://tw.search.bid.yahoo.com/search/auction/product?p=%s&qt=product&kw=%s&cid=0&clv=0&acu=0&property=auction&sub_property=auction&srch=product&aoffset=%s&poffset=0&pg=%s&sort=-curp&nst=1&act=srp&rescheck=1" %(self.qs,self.qs,y_limit,y_page))
+
      while i < 3:
        x = urllib.request.urlopen("https://tw.search.bid.yahoo.com/search/auction/product?p=%s&qt=product&kw=%s&cid=0&clv=0&acu=0&property=auction&sub_property=auction&srch=product&aoffset=%s&poffset=0&pg=%s&sort=-curp&nst=1&act=srp&rescheck=1" %(self.qs,self.qs,y_limit,y_page))
+       
        #x = urllib.request.urlopen("https://tw.search.bid.yahoo.com/search/auction/product?p=intel+i3-6100&qt=product&kw=intel+i3-6100&cid=0&clv=0&acu=0&property=auction&sub_property=auction&srch=product&aoffset=0&poffset=0&pg=1&sort=-curp&nst=1&act=srp&rescheck=1")
        html = x.read()
        soup = BeautifulSoup(html,"html.parser")
        #print(soup.find_all('em',limit=60))
        
        
-       y_price = self.yhm_price
-       hisa = int(self.yh_price)
+       #y_price = self.yhm_price
+       #hisa = int(self.yh_price)
        yp_limit_top = y_price+hisa
        yp_limit_bottom = y_price-hisa
        q=0
@@ -52,7 +58,7 @@ class Y_sea:
        i+=1
      
      yx = EXport_excel()
-     yx.ExExcel(y_dict)
+     yx.ExExcel(y_dict,hisa,y_price)
      
 
 #露天 http://search.ruten.com.tw/search/s000.php?enc=u&searchfrom=searchf&k=arduino+mega&t=0&p=2   p is page_will

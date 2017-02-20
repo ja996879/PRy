@@ -11,7 +11,7 @@ class EXport_excel:
           
    def w_excel(self):       
        
-       workbook = xlsxwriter.Workbook("C:\\Users\\%s\\Desktop\\%s.xlsx" % (self.us,self.today_dt))
+       workbook = xlsxwriter.Workbook("C:\\Users\\%s\\Desktop\\%sprduct.xlsx" % (self.us,self.today_dt))
           
        worksheet = workbook.add_worksheet()
 
@@ -30,7 +30,7 @@ class EXport_excel:
           z+=1
        workbook.close()
        xa.del_con
-   def ExExcel(self,e_info):
+   def ExExcel(self,e_info,e_pr,m_pr):
        print(e_info)
        z=0
        y=0
@@ -42,6 +42,10 @@ class EXport_excel:
           ew_workbook.write(z,y+1,v[0])
           ew_workbook.write(z,y+2,v[1])
           z+=1
+       ew_workbook.write(z+2,y,"誤差值")
+       ew_workbook.write(z+2,y+1,e_pr)
+       ew_workbook.write(z+2,y+2,"物品原價")
+       ew_workbook.write(z+2,y+3,m_pr)
        e_workbook.close
          
 
