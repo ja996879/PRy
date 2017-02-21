@@ -162,26 +162,25 @@ class appMain(Frame):
         box2_menu=[]
         mes_box=self.box.get()
         mes_box=s_Help.check_str(mes_box)
-        try:
-          cbx = Sql3()
-          coi = cbx.s_sql("select id from allpro where pro_name = '%s'" %(mes_box))
-          for coq in coi:
-             xcoi=coq[0]
-          cbo =cbx.s_sql("select p_name from products where pn_name = '%s'" %(xcoi))
-          box2_menu.append("請選擇")
-          for coa in cbo:
-             box2_menu.append(coa[0])
-          cbx.del_con()
-          self.box2['values']=box2_menu
-        except:
-          messagebox.showinfo("warning","請先選擇上方條件")
+        
+        cbx = Sql3()
+        coi = cbx.s_sql("select id from allpro where pro_name = '%s'" %(s_Help.check_str(mes_box)))
+        for coq in coi:
+         xcoi=coq[0]
+        cbo =cbx.s_sql("select p_name from products where pn_name = '%s'" %(s_Help.check_str(str(xcoi))))
+        box2_menu.append("請選擇")
+        for coa in cbo:
+         box2_menu.append(coa[0])
+        cbx.del_con()
+        self.box2['values']=box2_menu
+       
         #combobox onchange event
         #lock
           
     def change_box2(self):
         lock_name = self.lockpninput.get()
         lox = Sql3()
-        clox = lox.s_sql("select pn_name,p_name,price from products where p_name='%s'" %(lock_name))
+        clox = lox.s_sql("select pn_name,p_name,price from products where p_name='%s'" %(s_Help.check_str(lock_name)))
         for cloa in clox:
            try: 
              self.uppninput.insert(0,cloa[0])
